@@ -1,11 +1,11 @@
 package main.java.edu.nyu.cs9053.homework8;
 
 public class Task {
-    private int ID;
-    private long startTime;
-    private long endTime;
+    private final int ID;
+    private final long startTime;
+    private final long endTime;
 
-    public Task(int ID, int startTime, int endTime) {
+    public Task(int ID, long startTime, long endTime) {
         this.ID = ID;
         this.startTime = startTime;
         this.endTime = endTime;
