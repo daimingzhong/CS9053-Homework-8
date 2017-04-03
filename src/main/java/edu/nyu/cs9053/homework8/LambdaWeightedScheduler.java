@@ -22,32 +22,30 @@ public class LambdaWeightedScheduler {
         };
         Collections.sort(tasks, comparator);
         Map<Integer, List<Integer>> hashMap = new HashMap<>();
-        int dp[] = new int[tasks.size()];
-        dp[0] = tasks.get(0).getMoney();
+        int dp[] = new int[tasks.size() + 1];
         List<Integer> ini =  new ArrayList<>();
         ini.add(0);
         hashMap.put(0, ini);
-        for (int i = 1; i < tasks.size(); i++) {
-            int j = helper(i, tasks);
-            if (dp[i - 1] >= dp[j] + tasks.get(i).getMoney()) {
-                dp[i] = dp[i - 1];
-                List<Integer> tmp = new ArrayList<>(hashMap.get(i - 1));
-                tmp.add(i);
-                hashMap.put(i, tmp);
+        for (int i = 0; i < tasks.size(); i++) {
+            int j = helper(i, tasks) + 1;
+            if (dp[i] >= dp[j] + tasks.get(i).getMoney()) {
+                dp[i + 1] = dp[i];
+                hashMap.put(i + 1, new ArrayList<>(hashMap.get(i)));
             }
             else {
-                dp[i] = dp[j];
-                hashMap.put(i, new ArrayList<>(hashMap.get(j)));
+                dp[i + 1] = dp[j] + tasks.get(i).getMoney();
+                List<Integer> tmp = new ArrayList<>(hashMap.get(j));
+                tmp.add(i + 1);
+                hashMap.put(i + 1, tmp);
             }
         }
         List<Integer> tmp = hashMap.get(tasks.size());
-        for (int i = 0; i < tmp.size(); i++){
-            result.add(tasks.get(tmp.get(i)));
+        for (int i = 1; i < tmp.size(); i++){
+            result.add(tasks.get(tmp.get(i) - 1));
         }
         return result;
     }
 
-    // find the closest task finish before i-th task begin
     private int helper(int i, List<TaskWithMoney> tasks) {
         int left = 0;
         int right = i;
@@ -63,11 +61,11 @@ public class LambdaWeightedScheduler {
         if (tasks.get(right).getEndTime() <= tasks.get(i).getStartTime()) {
             return right;
         }
-        else if (tasks.get(right).getEndTime() <= tasks.get(i).getStartTime()) {
+        else if (tasks.get(left).getEndTime() <= tasks.get(i).getStartTime()) {
             return left;
         }
         else {
-            return 0;
+            return -1;
         }
     }
 }

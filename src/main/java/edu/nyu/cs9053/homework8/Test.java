@@ -21,11 +21,11 @@ public class Test{
 //        List<Task> result = ls.selectTasks(tasks);
 //        System.out.println(1);
 
-        TaskWithMoney jb1 = new TaskWithMoney(1, 2, 3, 10);
-        TaskWithMoney jb2 = new TaskWithMoney(1, 3, 6, 10);
-        TaskWithMoney jb3 = new TaskWithMoney(1, 4, 6, 10);
-        TaskWithMoney jb4 = new TaskWithMoney(1, 5, 6, 10);
-        TaskWithMoney jb5 = new TaskWithMoney(1, 6, 7, 10);
+        TaskWithMoney jb1 = new TaskWithMoney(0, 2, 3, 10);
+        TaskWithMoney jb2 = new TaskWithMoney(1, 3, 6, 11);
+        TaskWithMoney jb3 = new TaskWithMoney(2, 4, 6, 12);
+        TaskWithMoney jb4 = new TaskWithMoney(3, 5, 6, 13);
+        TaskWithMoney jb5 = new TaskWithMoney(4, 6, 7, 14);
 
         List<TaskWithMoney> tasks = new ArrayList<>();
         tasks.add(jb1);
@@ -35,7 +35,9 @@ public class Test{
         tasks.add(jb5);
         LambdaWeightedScheduler ls = new LambdaWeightedScheduler();
         List<TaskWithMoney> result = ls.selectTasks(tasks);
-        System.out.println(1);
+        for (int i = 0; i < result.size(); i++) {
+            System.out.println(result.get(i).getID());
 
+        }
     }
 }
